@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000fa;
+            color: #0066ff;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #0066ff;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            background-color: #000000;
+            color: #ffffff;
+            border: 1px solid 0066ff;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #0066ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #5f9fff70;
+        }
+    </style>
+</head>
+<body>
+    <h1>omr spinnet Email Generator</h1>
+    <textarea id="emailContent" placeholder="Type your email content here..."></textarea><br>
+    <button onclick="generateEmail()">Generate Email</button>
+    <button onclick="copyEmail()">📋 Copy Email</button>
+
+    <div id="emailPreview" style="display:none;"></div>
+
+    <script>
+        function generateEmail() {
+            let content = document.getElementById("emailContent").value;
+
+            let formattedContent = content
+                .split("\n")
+                .map(line => `<p style="margin:10px 0; padding:0; text-align:left;">${line}</p>`)
+                .join("");
+
+            let emailHTML = `
+                <html>
+                <head>
+                    <style>
+                        body, table, td {
+                            background-color: #11111 !important;
+                            color: #ffffff !important;
+                            font-family: Arial, sans-serif;
+                        }
+                    </style>
+                </head>
+                <body style="margin:0; padding:0; background-color:#111111 !important; color:#ffffff !important;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" 
+                    bgcolor="#111111" style="max-width:600px; margin:0 auto; padding:20px; border-radius:5px;">
+                        <tr>
+                            <td align="center" style="font-size:24px; font-weight:bold; color:#0066ff !important;">
+                                OMR SNIPPET
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:16px; line-height:1.6; padding:15px; color:#ffffff !important; text-align:left;">
+                                ${formattedContent}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="padding-top:20px; border-top:1px solid #0066ff; font-size:14px; color:#ffffff !important;">
+                                <p><strong>Omer Khan </strong><br>
+                                Freelance Front-End Web Developer.<br>
+                                Creating interactive and modern web experiences<br>
+                                A levels computer science major </p>
+                                <p><strong>OMR SNIPPET - Pakistan</strong></p>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="padding:10px;">
+                                <a href="tel:+923266141717" style="display:inline-block; padding:10px 20px; margin:5px; color:#000; background-color:#0066ff; text-decoration:none; border-radius:5px; font-weight:bold;">📞 Call / WhatsApp</a>
+                                <a href="khanlodhi283@gmail.com" style="display:inline-block; padding:10px 20px; margin:5px; color:#000; background-color:#0066ff; text-decoration:none; border-radius:5px; font-weight:bold;">📧 Email Us</a>
+                                <a href="https://www.omerkhan.site/" style="display:inline-block; padding:10px 20px; margin:5px; color:#000; background-color:#0066ff; text-decoration:none; border-radius:5px; font-weight:bold;">🌐 View portfolio</a>
+                               
+                            </td>
+                        </tr>
+                    </table>
+                </body>
+                </html>
+            `;
+
+            document.getElementById("emailPreview").innerHTML = emailHTML;
+            document.getElementById("emailPreview").style.display = "block";
+        }
+
+        function copyEmail() {
+            let emailPreview = document.getElementById("emailPreview");
+
+            if (!emailPreview.innerHTML.trim()) {
+                alert("Please generate the email first!");
+                return;
+            }
+
+            let range = document.createRange();
+            range.selectNode(emailPreview);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+
+            alert("Email copied! Paste it into Gmail.");
+        }
+    </script>
+</body>
+</html>
